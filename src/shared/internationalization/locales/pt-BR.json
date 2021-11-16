@@ -1,0 +1,10 @@
+{
+  "validations": {
+    "many_requests": "Muitas requisições",
+    "no_permission_for_origin": "SEM PERMISSÃO PARA A ORIGIN",
+    "storage_max_size" : "O arquivo pode ter no máximo {max} MegaBytes",
+    "enter_the_data_file" : "Informe o arquivo para fazer o upload",
+    "invalid_file" : "Arquivo inválido. E necessário ter a extensão do arquivo",
+    "invalid_extension" : "Arquivo inválido. Informe um arquivo do tipo"
+  }
+}
