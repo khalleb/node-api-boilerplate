@@ -46,8 +46,6 @@ export default function (plop: NodePlopAPI) {
         message: 'Should include Service?',
         default: true,
       },
-
-
       {
         type: 'confirm',
         name: 'shouldIncludeController',
@@ -55,23 +53,11 @@ export default function (plop: NodePlopAPI) {
         default: true,
       },
       {
-        type: 'list',
-        name: 'httpMethod',
-        message: 'HTTP method',
-        choices: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-        default: 'GET',
-        when: (answers) => {
-          return answers.shouldIncludeController
-        }
+        type: 'confirm',
+        name: 'shouldIncludeDto',
+        message: 'Include DTO?',
+        default: true,
       },
-      {
-        type: 'input',
-        name: 'httpPath',
-        message: 'HTTP route path',
-        when: (answers) => {
-          return answers.shouldIncludeController
-        }
-      }
     ],
 
     actions: (answers) => {
@@ -111,25 +97,37 @@ export default function (plop: NodePlopAPI) {
             skipIfExists: true,
           });
         }
+        if (answers?.shouldIncludeService) {
+          actions.push({
+            type: 'add',
+            path: '../src/modules/{{module}}/services/{{pascalCase nameEntity}}Services.ts',
+            templateFile: 'templates/services.ts.hbs',
+            skipIfExists: true,
+          });
+        }
+        if (answers?.shouldIncludeController) {
+          actions.push({
+            type: 'add',
+            path: '../src/modules/{{module}}/infra/http/controllers/{{pascalCase nameEntity}}Controller.ts',
+            templateFile: 'templates/controller.ts.hbs',
+            skipIfExists: true,
+          });
+          actions.push({
+            type: 'add',
+            path: '../src/modules/{{module}}/infra/http/routes/{{lowerCase nameEntity}}.routes.ts',
+            templateFile: 'templates/routes.ts.hbs',
+            skipIfExists: true,
+          });
+        }
+        if (answers?.shouldIncludeDto) {
+          actions.push({
+            type: 'add',
+            path: '../src/modules/{{module}}/dtos/I{{pascalCase nameEntity}}DTO.ts',
+            templateFile: 'templates/dto.ts.hbs',
+            skipIfExists: true,
+          });
+        }
       }
-
-
-      // if (answers.shouldIncludeController) {
-      //   actions.push({
-      //     type: 'add',
-      //     path: '../src/modules/{{module}}/useCases/{{pascalCase name}}/{{pascalCase name}}Controller.ts',
-      //     templateFile: 'templates/useCaseController.ts.hbs',
-      //     skipIfExists: true,
-      //   })
-
-      //   actions.push({
-      //     type: 'add',
-      //     path: '../src/infra/http/factories/controllers/{{ pascalCase name }}ControllerFactory.ts',
-      //     templateFile: 'templates/controllerFactory.ts.hbs',
-      //     skipIfExists: true,
-      //   })
-      // }
-
       return actions;
     },
   });
