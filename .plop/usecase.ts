@@ -128,6 +128,9 @@ export default function (plop: NodePlopAPI) {
           });
         }
       }
+      else if (answers?.typeDataBase === 'MONGO') {
+
+      }
       return actions;
     },
   });
