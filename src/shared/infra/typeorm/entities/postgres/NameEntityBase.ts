@@ -1,6 +1,6 @@
 import { Column } from 'typeorm';
 
-import { EntityBase } from './postgres/EntityBase';
+import { EntityBase } from './EntityBase';
 
 abstract class KeyValueBase extends EntityBase {
   @Column()
