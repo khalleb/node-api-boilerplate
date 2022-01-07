@@ -7,7 +7,7 @@ import { {{ pascalCase nameEntity }}Controller } from '@modules/{{  module }}/in
 import { tokensServices } from '@shared/container';
 
 const router = Router();
-const controller = new ProductsController();
+const controller = new {{ pascalCase nameEntity }}Controller();
 const nameService: tokensServices = '{{ pascalCase nameEntity }}Services';
 
 const datasCreateUpdate = {
