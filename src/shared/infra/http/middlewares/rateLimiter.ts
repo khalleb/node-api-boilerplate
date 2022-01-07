@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import httpStatus from 'http-status';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
-import redis from 'redis';
+import { createClient } from 'redis';
 
 import { env } from '@shared/env';
 import AppError from '@shared/errors/AppError';
@@ -10,15 +10,9 @@ import { i18n } from '@shared/internationalization';
 import { AppLogger } from '@shared/logger';
 import { nameProject } from '@shared/utils/stringUtil';
 
-const dataConnection = {
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
-  db: env.REDIS_DB || 1,
-};
+const url = `redis://${env.REDIS_PASS}@${env.REDIS_HOST}:${env.REDIS_PORT}/${env.REDIS_DB || 1}`;
 
-const redisClient = redis.createClient(
-  env.REDIS_PASS ? { ...dataConnection, password: env.REDIS_PASS } : dataConnection,
-);
+const redisClient = createClient({ url });
 
 redisClient?.on('connect', () => {
   AppLogger.warn({ message: 'REDIS CONNECTED - RateLimited' });

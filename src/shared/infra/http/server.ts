@@ -9,6 +9,8 @@ import cors, { CorsOptions } from 'cors';
 import helmet from 'helmet';
 import path from 'path';
 
+import { uploadConfig } from '@config/upload';
+
 import { registerDependencies } from '@shared/container';
 import { env } from '@shared/env';
 import AppError from '@shared/errors/AppError';
@@ -47,6 +49,10 @@ class Server {
 
     // gzip compression
     this.app.use(compression());
+
+    if (env.isDevelopment) {
+      this.app.use('/files', express.static(uploadConfig.uplodsFolder));
+    }
 
     // Return page HTML
     this.app.set('views', path.join(__dirname, './views'));
