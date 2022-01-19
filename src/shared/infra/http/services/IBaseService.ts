@@ -8,7 +8,7 @@ interface IBaseService {
   update?(data: Request): Promise<any>;
   delete?(data: Request): Promise<any>;
   show?(data: Request): Promise<any | undefined>;
-  inactivateActivate?(data: Request): Promise<string>;
+  inactivateActivate?(data: Request): Promise<any>;
   index?(data: IPagination): Promise<IPaginationAwareObject>;
 }
 

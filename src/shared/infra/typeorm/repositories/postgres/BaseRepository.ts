@@ -52,6 +52,11 @@ export default class BaseRepository<T> implements IBaseRepository<T> {
     return false;
   }
 
+  public async checkIfThereIsRegistrationById(id: string): Promise<boolean> {
+    const result = await this.ormRepository.findOne(id);
+    return !!result;
+  }
+
   public async index(data: IPagination): Promise<IPaginationAwareObject> {
     const nameTable = this?.ormRepository?.metadata?.tableName;
     const queryBuilder = this.ormRepository.createQueryBuilder(nameTable);
@@ -59,7 +64,7 @@ export default class BaseRepository<T> implements IBaseRepository<T> {
       builder: queryBuilder,
       page: data?.page || 1,
       limit: data?.limit || 10,
-      status: data?.status || 'both',
+      status: data?.status || 'all',
       orderBySort: data?.orderBySort,
       order: data?.order,
       select: this.buildAttributes(data.select, nameTable),

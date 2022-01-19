@@ -1,8 +1,7 @@
 import { ILike, SelectQueryBuilder } from 'typeorm';
 
 import { env } from '@shared/env';
-
-type StatusType = 'active' | 'inactive' | 'both';
+import { StatusType } from '@shared/infra/models/IInfraDTO';
 
 export interface IPagination {
   limit: number;
@@ -61,7 +60,7 @@ export const paginate = async ({
   limit = limit || Number(env.PAGE_SIZE) || 10;
 
   if (!status) {
-    status = 'both';
+    status = 'all';
   }
 
   if (orderBySort) {

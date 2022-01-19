@@ -10,5 +10,6 @@ export default interface IBaseRepository<T> {
   findById(id: string): Promise<T | undefined>;
   findByIds(ids: string[]): Promise<T[]>;
   inactivateActivate(entity: T): Promise<boolean>;
+  checkIfThereIsRegistrationById(id: string): Promise<boolean>;
   index(data: IPagination): Promise<IPaginationAwareObject>;
 }
